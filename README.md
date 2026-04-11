@@ -6,7 +6,7 @@ WanderLust is a full-stack vacation rental web application focused on backend ar
 
 ## 🚀 Live Demo
 
-👉 https://your-render-link.onrender.com
+👉 https://wanderlust-1sk0.onrender.com
 
 ---
 
