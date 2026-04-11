@@ -133,7 +133,7 @@ CLOUDINARY_SECRET=your_secret
 
 Run project:
 
-npm start
+npm start```
 📸 Screenshots
 
 (Add your screenshots here 👇)
