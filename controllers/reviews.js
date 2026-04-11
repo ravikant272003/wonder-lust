@@ -16,11 +16,26 @@ module.exports.createReview=async(req,res)=>{
 
 }
 
-module.exports.destroyReview=async(req,res)=>{
-    let  {id,reviewId}=req.params
-    await Listing.findByIdAndUpdate(id,{$pull:{reviews:reviewId}})
-    await Review.findByIdAndDelete(reviewId)
-    req.flash('success','Review Deleted!')
-    res.redirect(`/listings/${id}`)
+module.exports.destroyReview = async (req, res) => {
+    let { id, reviewId } = req.params;
 
-}
+    //  Step 1: Review find karo
+    const review = await Review.findById(reviewId);
+
+    //  Step 2: Authorization check
+    if (!review.author.equals(req.user._id)) {
+        req.flash("error", "You are not allowed to delete this review");
+        return res.redirect(`/listings/${id}`);
+    }
+
+    //  Step 3: Listing se reference hatao
+    await Listing.findByIdAndUpdate(id, {
+        $pull: { reviews: reviewId }
+    });
+
+    //  Step 4: Review delete karo
+    await Review.findByIdAndDelete(reviewId);
+
+    req.flash('success', 'Review Deleted!');
+    res.redirect(`/listings/${id}`);
+};
